@@ -117,6 +117,11 @@ class FlutterCallkitIncoming {
     return await _channel.invokeMethod("requestNotificationPermission", data);
   }
 
+  /// End all calls withoutlistenevent.
+  static Future endAllCallsWithoutListenEvent() async {
+    await _channel.invokeMethod("endAllCallsWithoutListenEvent");
+  }
+
   static CallEvent? _receiveCallEvent(dynamic data) {
     Event? event;
     Map<String, dynamic> body = {};

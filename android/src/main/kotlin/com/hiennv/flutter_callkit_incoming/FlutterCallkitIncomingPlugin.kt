@@ -252,6 +252,19 @@ class FlutterCallkitIncomingPlugin : FlutterPlugin, MethodCallHandler, ActivityA
                     }
                     callkitNotificationManager?.requestNotificationPermission(activity, map)
                 }
+                "endAllCallsWithoutListenEvent" -> {
+                    val calls = getDataActiveCalls(context)
+                    calls.forEach {
+                        context?.sendBroadcast(
+                            CallkitIncomingBroadcastReceiver.getIntentEndedCallWithoutNotif(
+                                requireNotNull(context),
+                                it.toBundle()
+                            )
+                        )
+                    }
+                    removeAllCalls(context)
+                    result.success("OK")
+                }
             }
         } catch (error: Exception) {
             result.error("error", error.message, "")
